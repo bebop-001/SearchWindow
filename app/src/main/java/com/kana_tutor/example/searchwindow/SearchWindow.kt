@@ -1,6 +1,16 @@
 package com.kana_tutor.example.searchwindow
-
-
+/*
+ *  Copyright (C) 2020 kana-tutor.com
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
 import android.content.Context
 import android.content.Context.INPUT_METHOD_SERVICE
 import android.util.AttributeSet
@@ -10,15 +20,12 @@ import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.RelativeLayout
 import androidx.core.content.ContextCompat
-import androidx.core.content.getSystemService
 import kotlinx.android.synthetic.main.search_window.view.*
 import kotlinx.android.synthetic.main.search_window.view.search_ET
 import kotlinx.android.synthetic.main.search_window.view.search_clear_BTN
 
-import com.kana_tutor.example.searchwindow.R
-
 interface SearchOnClick {
-    fun searchOnClick(view : View, item : String)
+    fun searchOnClick(view : View, textIn : String)
 }
 class SearchWindow @JvmOverloads constructor(
     context: Context,
@@ -40,12 +47,12 @@ class SearchWindow @JvmOverloads constructor(
         attrs?.let {
             val typedArray =
                 context.obtainStyledAttributes(
-                    it, R.styleable.search_window_attrs, 0, 0)
+                    it, R.styleable.SearchWindow, 0, 0)
             val hint = resources.getText(typedArray.getResourceId(
-                R.styleable.search_window_attrs_hint, R.string.search))
+                R.styleable.SearchWindow_hint, R.string.search))
             search_ET.hint = hint
             val colorId = ContextCompat.getColor(context, typedArray.getResourceId(
-                R.styleable.search_window_attrs_textColor, android.R.color.tab_indicator_text))
+                R.styleable.SearchWindow_textColor, android.R.color.tab_indicator_text))
             search_ET.setTextColor(colorId)
 
             typedArray.recycle()
@@ -68,7 +75,7 @@ class SearchWindow @JvmOverloads constructor(
             {search_ET.setText("")}
         )
         search_search_BTN.setOnClickListener(fun (_) {
-            val textIn = search_ET.text.toString();
+            val textIn = search_ET.text.toString()
             if (text.length > 0) {
                 hideKeyboard()
                 searchOnClickListener?.searchOnClick(this, textIn)
@@ -77,10 +84,10 @@ class SearchWindow @JvmOverloads constructor(
     }
     var search_btn_visibility : Int
         get() = search_search_BTN.visibility
-        set(vis:Int) { search_search_BTN.visibility = vis }
+        set(vis) { search_search_BTN.visibility = vis }
     var text : String
         get() : String  = search_ET.text.toString()
-        set(str:String) { search_ET.setText(str) }
+        set(str) { search_ET.setText(str) }
     fun setSearchOnClick(listener: SearchOnClick) {
         searchOnClickListener = listener
     }
