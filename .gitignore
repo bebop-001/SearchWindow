@@ -1,0 +1,12 @@
+/build
+/captures
+.DS_Stopre
+.gradle
+*.iml
+.idea
+/local.properties
+
+t.*
+err
+*.sw*
+*/*.sw*
