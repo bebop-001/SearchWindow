@@ -20,8 +20,6 @@ are example code.  Custom attributes for the EditText are in
 attrs.xml.  SearchWindow.kt is the actual custom view.
 
 <center>
-<details>
   <summary>Demo app screenshot</summary>
   <img alt="demo app screenshot" src="https://github.com/bebop-001/SearchWindow/blob/master/images/Screenshot.png">
-</details>
 </center>
