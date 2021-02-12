@@ -15,14 +15,15 @@ import android.content.Context
 import android.content.Context.INPUT_METHOD_SERVICE
 import android.util.AttributeSet
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.RelativeLayout
 import androidx.core.content.ContextCompat
-import kotlinx.android.synthetic.main.search_window.view.*
-import kotlinx.android.synthetic.main.search_window.view.search_ET
-import kotlinx.android.synthetic.main.search_window.view.search_clear_BTN
+import com.kana_tutor.example.searchwindow.databinding.SearchWindowBinding
 
 interface SearchOnClick {
     fun searchOnClick(view : View, textIn : String)
@@ -40,9 +41,21 @@ class SearchWindow @JvmOverloads constructor(
         imm.hideSoftInputFromWindow(windowToken, 0)
     }
 
+    val binding:SearchWindowBinding
+    val searchET:EditText
+    val searchClearBTN:ImageButton
+    val searchSearchBTN:ImageButton
+
     init {
         Log.d("SearchWindow", "$context:$attrs")
         View.inflate(context, R.layout.search_window, this)
+        binding = SearchWindowBinding.inflate(
+            LayoutInflater.from(context)
+        )
+        addView(binding.root)
+        searchET = binding.searchET
+        searchClearBTN = binding.searchClearBTN
+        searchSearchBTN = binding.searchSearchBTN
 
         attrs?.let {
             val typedArray =
@@ -50,14 +63,14 @@ class SearchWindow @JvmOverloads constructor(
                     it, R.styleable.SearchWindow, 0, 0)
             val hint = resources.getText(typedArray.getResourceId(
                 R.styleable.SearchWindow_hint, R.string.search))
-            search_ET.hint = hint
+            searchET.hint = hint
             val colorId = ContextCompat.getColor(context, typedArray.getResourceId(
                 R.styleable.SearchWindow_textColor, android.R.color.tab_indicator_text))
-            search_ET.setTextColor(colorId)
+            searchET.setTextColor(colorId)
 
             typedArray.recycle()
         }
-        search_ET.setOnEditorActionListener { v, actionId, event ->
+        searchET.setOnEditorActionListener { v, actionId, _ ->
             when (actionId) {
                 EditorInfo.IME_ACTION_SEARCH -> {
                     val textIn = v.text.toString()
@@ -71,11 +84,11 @@ class SearchWindow @JvmOverloads constructor(
                 }
             }
         }
-        search_clear_BTN.setOnClickListener(
-            {search_ET.setText("")}
+        searchClearBTN.setOnClickListener(
+            {searchET.setText("")}
         )
-        search_search_BTN.setOnClickListener(fun (_) {
-            val textIn = search_ET.text.toString()
+        searchSearchBTN.setOnClickListener(fun (_) {
+            val textIn = searchET.text.toString()
             if (text.length > 0) {
                 hideKeyboard()
                 searchOnClickListener?.searchOnClick(this, textIn)
@@ -83,11 +96,11 @@ class SearchWindow @JvmOverloads constructor(
         })
     }
     var search_btn_visibility : Int
-        get() = search_search_BTN.visibility
-        set(vis) { search_search_BTN.visibility = vis }
+        get() = searchClearBTN.visibility
+        set(vis) { searchSearchBTN.visibility = vis }
     var text : String
-        get() : String  = search_ET.text.toString()
-        set(str) { search_ET.setText(str) }
+        get() : String  = searchET.text.toString()
+        set(str) { searchET.setText(str) }
     fun setSearchOnClick(listener: SearchOnClick) {
         searchOnClickListener = listener
     }

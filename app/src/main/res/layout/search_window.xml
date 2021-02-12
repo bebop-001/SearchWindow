@@ -28,32 +28,29 @@
         android:layout_toStartOf="@id/search_search_BTN"
         />
 
-    <Button
+    <ImageButton
         android:id="@+id/search_search_BTN"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_toStartOf="@id/search_clear_BTN"
+        android:background="@android:drawable/ic_menu_search"
+        android:contentDescription="search for kanji"
         android:gravity="center"
         android:minWidth="0dp"
         android:minHeight="0dp"
         android:padding="8dp"
-        android:text="🔍"
-        android:background="@android:color/transparent"
-        android:textSize="18sp"
-        android:layout_toStartOf="@id/search_clear_BTN"
-        />
-    <Button
+        android:textSize="18sp" />
+
+    <ImageButton
         android:id="@+id/search_clear_BTN"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:background="@android:drawable/ic_delete"
         android:gravity="center"
         android:minWidth="0dp"
         android:minHeight="0dp"
         android:padding="8dp"
-        android:text="❌"
-        android:background="@android:color/transparent"
-        android:textSize="18sp"
-        android:layout_alignParentEnd="true"
-
-        />
+        android:textSize="18sp" />
 
 </RelativeLayout>

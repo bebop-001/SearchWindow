@@ -15,36 +15,51 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import kotlinx.android.synthetic.main.activity_main.*
+import android.widget.Button
+import android.widget.TextView
+import com.kana_tutor.example.searchwindow.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity(), SearchOnClick {
+
+    private lateinit var binding: ActivityMainBinding
+    private lateinit var window1: SearchWindow
+    private lateinit var window2: SearchWindow
+    private lateinit var showHideButton: Button
+    private lateinit var testTextView: TextView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        window_1.setSearchOnClick(this)
-        window_2.setSearchOnClick(this)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        window1 = binding.window1
+        window2 = binding.window2
+        showHideButton = binding.showHideButton
+        testTextView = binding.testTextView
+
+        setContentView(binding.root)
+        window1.setSearchOnClick(this)
+        window2.setSearchOnClick(this)
     }
 
     fun showHide(view: View) {
-        if (view == show_hide_button) {
-            window_1.visibility =
-                if (window_1.visibility == View.GONE) View.VISIBLE
+        if (view == binding.showHideButton) {
+            window1.visibility =
+                if (window1.visibility == View.GONE) View.VISIBLE
                 else View.GONE
         }
-        else if (view == show_hide_search_button) {
-            window_1.search_btn_visibility =
-                if (window_1.search_btn_visibility == View.GONE) View.VISIBLE
+        else if (view == binding.showHideButton) {
+            window1.search_btn_visibility =
+                if (window1.search_btn_visibility == View.GONE) View.VISIBLE
                 else View.GONE
         }
     }
 
     override fun searchOnClick(view: View, textIn: String) {
         val viewName = when (view) {
-            window_1 -> "window_1"
-            window_2 -> "window_2"
+            window1 -> "window1"
+            window2 -> "window2"
             else -> "unknown"
         }
-        test_text_view.setText("{$viewName:$textIn}")
+        testTextView.text = "{$viewName:$textIn}"
         Log.d("searchOnClick", "{$viewName:$textIn}")
     }
 }
