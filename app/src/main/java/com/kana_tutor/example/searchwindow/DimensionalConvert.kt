@@ -1,7 +1,9 @@
+@file:Suppress("unused", "DUPLICATE_LABEL_IN_WHEN")
+
 package com.kana_tutor.example.searchwindow
 /*
  *  Copyright (C) 2021 kana-tutor.com
- *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  Licensed under the Apache License, Version 2.0 (the "License")
  *  you may not use this file except in compliance with the License.
  *  You may obtain a copy of the License at
  *  http://www.apache.org/licenses/LICENSE-2.0
@@ -32,20 +34,20 @@ import java.lang.RuntimeException
  * COMPLEX_UNIT_ dimension.
  */
 
-val COMPLEX_UNIT_DP = COMPLEX_UNIT_DIP // alias.
+const val COMPLEX_UNIT_DP = COMPLEX_UNIT_DIP // alias.
 fun Context.dimensionalToDevicePixels (
     dimensionalType:Int,
     value:Float
     ) : Float {
     val metrics: DisplayMetrics = resources.displayMetrics
-    when (dimensionalType) {
-        COMPLEX_UNIT_PX -> return value;
-        COMPLEX_UNIT_DIP -> return value * metrics.density;
-        COMPLEX_UNIT_DP -> return value * metrics.density;
-        COMPLEX_UNIT_SP -> return value * metrics.scaledDensity;
-        COMPLEX_UNIT_PT -> return value * metrics.xdpi * (1.0f/72);
-        COMPLEX_UNIT_IN -> return value * metrics.xdpi;
-        COMPLEX_UNIT_MM -> return value * metrics.xdpi * (1.0f/25.4f);
+    return when (dimensionalType) {
+        COMPLEX_UNIT_PX -> value
+        COMPLEX_UNIT_DIP -> value * metrics.density
+        COMPLEX_UNIT_DP -> value * metrics.density
+        COMPLEX_UNIT_SP -> value * metrics.scaledDensity
+        COMPLEX_UNIT_PT -> value * metrics.xdpi * (1.0f/72)
+        COMPLEX_UNIT_IN -> value * metrics.xdpi
+        COMPLEX_UNIT_MM -> value * metrics.xdpi * (1.0f/25.4f)
         else  -> throw RuntimeException("""dimensionalToDevicePixels:
             | $dimensionalType: not a complex unit dimension.""".trimMargin("|"))
     }
