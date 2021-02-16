@@ -3,4 +3,6 @@
 
     <string name="search">search</string>
     <string name="hi_there">Hi there</string>
+    <string name="dp_default">I\'m default text size</string>
+    <string name="dp_25">I\'m 25dp</string>
 </resources>

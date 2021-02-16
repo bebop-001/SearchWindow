@@ -20,19 +20,22 @@
         android:id="@+id/window_1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:hint="@string/dp_default"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/hello_world_TV"
         />
+
     <com.kana_tutor.example.searchwindow.SearchWindow
         android:id="@+id/window_2"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
-        app:hint="@string/hi_there"
+        app:ems="10"
+        app:hint="@string/dp_25"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/window_1"
-        />
+        app:textSize="25dp" />
 
     <Button
         android:id="@+id/show_hide_button"

@@ -1,6 +1,6 @@
 package com.kana_tutor.example.searchwindow
 /*
- *  Copyright (C) 2020 kana-tutor.com
+ *  Copyright (C) 2021 kana-tutor.com
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
  *  You may obtain a copy of the License at
@@ -15,6 +15,7 @@ import android.content.Context
 import android.content.Context.INPUT_METHOD_SERVICE
 import android.util.AttributeSet
 import android.util.Log
+import android.util.TypedValue.COMPLEX_UNIT_PX
 import android.view.LayoutInflater
 import android.view.View
 import android.view.inputmethod.EditorInfo
@@ -58,17 +59,35 @@ class SearchWindow @JvmOverloads constructor(
         searchSearchBTN = binding.searchSearchBTN
 
         attrs?.let {
-            val typedArray =
-                context.obtainStyledAttributes(
-                    it, R.styleable.SearchWindow, 0, 0)
-            val hint = resources.getText(typedArray.getResourceId(
-                R.styleable.SearchWindow_hint, R.string.search))
-            searchET.hint = hint
-            val colorId = ContextCompat.getColor(context, typedArray.getResourceId(
-                R.styleable.SearchWindow_textColor, android.R.color.tab_indicator_text))
-            searchET.setTextColor(colorId)
-
-            typedArray.recycle()
+            with(searchET) {
+                val typedArray =
+                    context.obtainStyledAttributes(
+                        it, R.styleable.SearchWindow, 0, 0
+                    )
+                hint = resources.getText(
+                    typedArray.getResourceId(
+                        R.styleable.SearchWindow_hint, R.string.search
+                    )
+                )
+                val colorId = ContextCompat.getColor(
+                    context, typedArray.getResourceId(
+                        R.styleable.SearchWindow_textColor,
+                        android.R.color.tab_indicator_text
+                    )
+                )
+                setTextColor(colorId)
+                val textSizePixels = typedArray.getDimensionPixelSize(
+                    R.styleable.SearchWindow_textSize,
+                    (searchET.textSize + 0.5).toInt()
+                )
+                setTextSize(COMPLEX_UNIT_PX, textSizePixels.toFloat())
+                val ems = typedArray.getInt(
+                    R.styleable.SearchWindow_ems, -1
+                )
+                if (ems > 0)
+                    setEms(ems)
+                typedArray.recycle()
+            }
         }
         searchET.setOnEditorActionListener { v, actionId, _ ->
             when (actionId) {
