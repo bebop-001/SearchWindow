@@ -14,13 +14,15 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        />
 
     <com.kana_tutor.example.searchwindow.SearchWindow
         android:id="@+id/window_1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:hint="@string/dp_default"
+        android:hint="@string/dp_default"
+        android:textColor="@android:color/holo_orange_light"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/hello_world_TV"
@@ -30,12 +32,13 @@
         android:id="@+id/window_2"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
-        app:ems="10"
-        app:hint="@string/dp_25"
+        android:textSize="25dp"
+        android:ems="10"
+        android:hint="@string/dp_25"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/window_1"
-        app:textSize="25dp" />
+        />
 
     <Button
         android:id="@+id/show_hide_button"

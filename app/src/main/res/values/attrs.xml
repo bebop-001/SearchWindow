@@ -12,10 +12,10 @@
 -->
 <resources>
     <declare-styleable name="SearchWindow">
-        <attr name="hint" format="reference" />
-        <attr name="textColor" format = "reference" />
-        <attr name="textSize" format = "dimension" />
-        <attr name="ems" format = "integer" />
+        <attr name="android:hint" format="reference|string" />
+        <attr name="android:textColor" format = "reference" />
+        <attr name="android:textSize" format = "dimension" />
+        <attr name="android:ems" format = "integer" />
     </declare-styleable>
 </resources>
 

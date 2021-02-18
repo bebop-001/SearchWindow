@@ -25,6 +25,7 @@ import android.widget.ImageButton
 import android.widget.RelativeLayout
 import androidx.core.content.ContextCompat
 import com.kana_tutor.example.searchwindow.databinding.SearchWindowBinding
+import java.lang.Exception
 
 interface SearchOnClick {
     fun searchOnClick(view : View, textIn : String)
@@ -59,35 +60,45 @@ class SearchWindow @JvmOverloads constructor(
         searchSearchBTN = binding.searchSearchBTN
 
         attrs?.let {
+            val typedArray =
+                context.obtainStyledAttributes(
+                    it, R.styleable.SearchWindow, 0, 0
+                )
             with(searchET) {
-                val typedArray =
-                    context.obtainStyledAttributes(
-                        it, R.styleable.SearchWindow, 0, 0
-                    )
                 hint = resources.getText(
                     typedArray.getResourceId(
-                        R.styleable.SearchWindow_hint, R.string.search
+                        R.styleable.SearchWindow_android_hint, R.string.search
                     )
                 )
-                val colorId = ContextCompat.getColor(
-                    context, typedArray.getResourceId(
-                        R.styleable.SearchWindow_textColor,
-                        android.R.color.tab_indicator_text
+                try {
+                    val colorId = ContextCompat.getColor(
+                        context, typedArray.getResourceId(
+                            R.styleable.SearchWindow_android_textColor,
+                            currentTextColor
+                        )
                     )
-                )
-                setTextColor(colorId)
+                    setTextColor(colorId)
+                } catch (e: Exception) {
+                    // if text color wasn't set, the window hasn't been
+                    // given a default text color and we get an exception.
+                    Log.d("SearchWindow",
+                        """
+                        |window id ${"0x%08x".format(searchET.id)}:
+                        |set color failed: $e
+                        |""".trimMargin("|"))
+                }
                 val textSizePixels = typedArray.getDimensionPixelSize(
-                    R.styleable.SearchWindow_textSize,
+                    R.styleable.SearchWindow_android_textSize,
                     (searchET.textSize + 0.5).toInt()
                 )
                 setTextSize(COMPLEX_UNIT_PX, textSizePixels.toFloat())
                 val ems = typedArray.getInt(
-                    R.styleable.SearchWindow_ems, -1
+                    R.styleable.SearchWindow_android_ems, -1
                 )
                 if (ems > 0)
                     setEms(ems)
-                typedArray.recycle()
             }
+            typedArray.recycle()
         }
         searchET.setOnEditorActionListener { v, actionId, _ ->
             when (actionId) {
