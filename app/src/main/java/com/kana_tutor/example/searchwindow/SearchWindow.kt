@@ -13,6 +13,7 @@ package com.kana_tutor.example.searchwindow
  */
 import android.content.Context
 import android.content.Context.INPUT_METHOD_SERVICE
+import android.content.res.TypedArray
 import android.util.AttributeSet
 import android.util.Log
 import android.util.TypedValue.COMPLEX_UNIT_PX
@@ -47,6 +48,19 @@ class SearchWindow @JvmOverloads constructor(
     val searchET:EditText
     val searchClearBTN:ImageButton
     val searchSearchBTN:ImageButton
+    // Resources using "flag" type can be multiple types.
+    // in our case, hint and text can be an int resource id or a string.
+    // determine what we have and return the value.  Would use getType
+    // but that requires API 21 or better.
+    enum class ResType{INT, TEXT, UNDEF}
+    fun TypedArray.getResType(value:Int):Pair<ResType, Any?> =
+        when {
+            getText(value) != null ->
+                ResType.TEXT to getText(value)
+            getResourceId(value, -1) != -1 ->
+                ResType.INT to getResourceId(value, -1)
+            else -> ResType.UNDEF to null
+        }
 
     init {
         Log.d("SearchWindow", "$context:$attrs")
@@ -65,11 +79,17 @@ class SearchWindow @JvmOverloads constructor(
                     it, R.styleable.SearchWindow, 0, 0
                 )
             with(searchET) {
-                hint = resources.getText(
-                    typedArray.getResourceId(
-                        R.styleable.SearchWindow_android_hint, R.string.search
-                    )
-                )
+                run {
+                    val (type, value) = typedArray.getResType(R.styleable.SearchWindow_android_hint)
+                    if (type == ResType.INT) setHint(value as Int)
+                    else if (type == ResType.TEXT) setHint(value as String)
+                    else (setHint(R.string.search_window))
+                }
+                run {
+                    val (type, value) = typedArray.getResType(R.styleable.SearchWindow_android_text)
+                    if (type == ResType.INT) setText(value as Int)
+                    else if (type == ResType.TEXT) setText(value as String)
+                }
                 try {
                     val colorId = ContextCompat.getColor(
                         context, typedArray.getResourceId(
@@ -81,11 +101,11 @@ class SearchWindow @JvmOverloads constructor(
                 } catch (e: Exception) {
                     // if text color wasn't set, the window hasn't been
                     // given a default text color and we get an exception.
-                    Log.d("SearchWindow",
-                        """
+                    Log.d("SearchWindow", """
                         |window id ${"0x%08x".format(searchET.id)}:
                         |set color failed: $e
-                        |""".trimMargin("|"))
+                        |""".trimMargin("|")
+                    )
                 }
                 val textSizePixels = typedArray.getDimensionPixelSize(
                     R.styleable.SearchWindow_android_textSize,
