@@ -28,23 +28,20 @@ import androidx.core.content.ContextCompat
 import com.kana_tutor.example.searchwindow.databinding.SearchWindowBinding
 import java.lang.Exception
 
-interface SearchOnClick {
-    fun searchOnClick(view : View, textIn : String)
-}
 class SearchWindow @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyle : Int = 0
 ) : RelativeLayout(context, attrs, defStyle) {
-    private var searchOnClickListener : SearchOnClick? = null
+    private var searchOnClickListener : ((view:View, textIn:String) -> Unit)? = null
 
     private fun hideKeyboard() {
         val imm = context.getSystemService(INPUT_METHOD_SERVICE)
-            as InputMethodManager
+                as InputMethodManager
         imm.hideSoftInputFromWindow(windowToken, 0)
     }
 
-    val binding:SearchWindowBinding
+    val binding: SearchWindowBinding
     val searchET:EditText
     val searchClearBTN:ImageButton
     val searchSearchBTN:ImageButton
@@ -124,7 +121,7 @@ class SearchWindow @JvmOverloads constructor(
             when (actionId) {
                 EditorInfo.IME_ACTION_SEARCH -> {
                     val textIn = v.text.toString()
-                    searchOnClickListener?.searchOnClick(this, textIn)
+                    searchOnClickListener?.invoke(this, textIn)
                     hideKeyboard()
                     Log.d("SearchWindow", "text in:${v.text.toString()}")
                     true
@@ -141,7 +138,7 @@ class SearchWindow @JvmOverloads constructor(
             val textIn = searchET.text.toString()
             if (text.length > 0) {
                 hideKeyboard()
-                searchOnClickListener?.searchOnClick(this, textIn)
+                searchOnClickListener?.invoke(this, textIn)
             }
         })
     }
@@ -151,7 +148,7 @@ class SearchWindow @JvmOverloads constructor(
     var text : String
         get() : String  = searchET.text.toString()
         set(str) { searchET.setText(str) }
-    fun setSearchOnClick(listener: SearchOnClick) {
+    fun setSearchOnClick(listener: ((View, String) -> Unit)) {
         searchOnClickListener = listener
     }
 }

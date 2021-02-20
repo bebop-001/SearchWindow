@@ -19,7 +19,7 @@ import android.widget.Button
 import android.widget.TextView
 import com.kana_tutor.example.searchwindow.databinding.ActivityMainBinding
 
-class MainActivity : AppCompatActivity(), SearchOnClick {
+class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var window1: SearchWindow
@@ -36,8 +36,8 @@ class MainActivity : AppCompatActivity(), SearchOnClick {
         testTextView = binding.testTextView
 
         setContentView(binding.root)
-        window1.setSearchOnClick(this)
-        window2.setSearchOnClick(this)
+        window1.setSearchOnClick(this::searchOnClick)
+        window2.setSearchOnClick(this::searchOnClick)
     }
 
     fun showHide(view: View) {
@@ -53,7 +53,7 @@ class MainActivity : AppCompatActivity(), SearchOnClick {
         }
     }
 
-    override fun searchOnClick(view: View, textIn: String) {
+    fun searchOnClick(view: View, textIn: String) {
         val viewName = when (view) {
             window1 -> "window1"
             window2 -> "window2"
