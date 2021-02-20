@@ -11,6 +11,7 @@ package com.kana_tutor.example.searchwindow
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
+import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -53,6 +54,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    @SuppressLint("SetTextI18n")
     fun searchOnClick(view: View, textIn: String) {
         val viewName = when (view) {
             window1 -> "window1"
