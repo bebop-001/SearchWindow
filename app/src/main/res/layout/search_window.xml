@@ -22,7 +22,7 @@
         android:imeOptions="actionSearch"
         android:focusableInTouchMode="true"
         android:inputType="text"
-        android:singleLine="true"
+        android:singleLine="false"
         android:autofillHints=""
         android:layout_alignParentStart="true"
         android:layout_toStartOf="@id/search_search_BTN"
