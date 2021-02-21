@@ -25,6 +25,7 @@ import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.RelativeLayout
 import androidx.core.content.ContextCompat
+import androidx.core.widget.doAfterTextChanged
 import com.kana_tutor.example.searchwindow.databinding.SearchWindowBinding
 import java.lang.Exception
 
@@ -70,12 +71,23 @@ class SearchWindow @JvmOverloads constructor(
         searchClearBTN = binding.searchClearBTN
         searchSearchBTN = binding.searchSearchBTN
 
+        searchClearBTN.isEnabled = searchET.text.isNotEmpty()
+        searchSearchBTN.isEnabled = text.isNotEmpty()
+
         attrs?.let {
+            searchClearBTN.isEnabled = text.isNotEmpty()
+            searchSearchBTN.isEnabled = text.isNotEmpty()
+
             val typedArray =
                 context.obtainStyledAttributes(
                     it, R.styleable.SearchWindow, 0, 0
                 )
             with(searchET) {
+                doAfterTextChanged { text ->
+                    searchClearBTN.isEnabled = text!!.isNotEmpty()
+                    searchSearchBTN.isEnabled = text.isNotEmpty()
+                    Log.d("searchET", "text=$text")
+                }
                 run {
                     val (type, value) = typedArray.getResType(R.styleable.SearchWindow_android_hint)
                     if (type == ResType.INT) setHint(value as Int)
@@ -132,7 +144,7 @@ class SearchWindow @JvmOverloads constructor(
             }
         }
         searchClearBTN.setOnClickListener(
-            {searchET.setText("")}
+            {searchET.setText(""); Log.d("searchClearBTN", "clicked")}
         )
         searchSearchBTN.setOnClickListener(fun (_) {
             val textIn = searchET.text.toString()
@@ -140,6 +152,7 @@ class SearchWindow @JvmOverloads constructor(
                 hideKeyboard()
                 searchOnClickListener?.invoke(this, textIn)
             }
+            Log.d("searchSearchBTN", "clicked")
         })
     }
     var search_btn_visibility : Int

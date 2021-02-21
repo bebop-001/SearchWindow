@@ -33,24 +33,29 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toStartOf="@id/search_clear_BTN"
-        android:background="@android:drawable/ic_menu_search"
+        android:background="@drawable/menu_search_selector"
         android:contentDescription="search for kanji"
         android:gravity="center"
         android:minWidth="0dp"
         android:minHeight="0dp"
         android:padding="8dp"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        android:enabled="false"
+        />
 
     <ImageButton
         android:id="@+id/search_clear_BTN"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:background="@android:drawable/ic_delete"
+        android:background="@drawable/clear_selector"
         android:gravity="center"
         android:minWidth="0dp"
         android:minHeight="0dp"
         android:padding="8dp"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        android:enabled="false"
+        />
+
 
 </RelativeLayout>
