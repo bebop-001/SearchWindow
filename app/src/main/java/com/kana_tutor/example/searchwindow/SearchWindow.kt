@@ -89,13 +89,15 @@ class SearchWindow @JvmOverloads constructor(
                     Log.d("searchET", "text=$text")
                 }
                 run {
-                    val (type, value) = typedArray.getResType(R.styleable.SearchWindow_android_hint)
+                    val (type, value) = typedArray
+                        .getResType(R.styleable.SearchWindow_android_hint)
                     if (type == ResType.INT) setHint(value as Int)
                     else if (type == ResType.TEXT) setHint(value as String)
                     else (setHint(R.string.search_window))
                 }
                 run {
-                    val (type, value) = typedArray.getResType(R.styleable.SearchWindow_android_text)
+                    val (type, value) = typedArray
+                        .getResType(R.styleable.SearchWindow_android_text)
                     if (type == ResType.INT) setText(value as Int)
                     else if (type == ResType.TEXT) setText(value as String)
                 }
