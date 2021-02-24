@@ -19,6 +19,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import com.kana_tutor.example.searchwindow.databinding.ActivityMainBinding
+import com.kana_tutor.utils.searchwindow.SearchWindow
 
 class MainActivity : AppCompatActivity() {
 

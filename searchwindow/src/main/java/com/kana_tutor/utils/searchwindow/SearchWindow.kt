@@ -1,4 +1,4 @@
-package com.kana_tutor.example.searchwindow
+package com.kana_tutor.utils.searchwindow
 /*
  *  Copyright (C) 2021 kana-tutor.com
  *  Licensed under the Apache License, Version 2.0 (the "License");
@@ -26,7 +26,7 @@ import android.widget.ImageButton
 import android.widget.RelativeLayout
 import androidx.core.content.ContextCompat
 import androidx.core.widget.doAfterTextChanged
-import com.kana_tutor.example.searchwindow.databinding.SearchWindowBinding
+import com.kana_tutor.utils.searchwindow.databinding.SearchWindowBinding
 import java.lang.Exception
 
 class SearchWindow @JvmOverloads constructor(
@@ -89,13 +89,15 @@ class SearchWindow @JvmOverloads constructor(
                     Log.d("searchET", "text=$text")
                 }
                 run {
-                    val (type, value) = typedArray.getResType(R.styleable.SearchWindow_android_hint)
+                    val (type, value) = typedArray
+                        .getResType(R.styleable.SearchWindow_android_hint)
                     if (type == ResType.INT) setHint(value as Int)
                     else if (type == ResType.TEXT) setHint(value as String)
                     else (setHint(R.string.search_window))
                 }
                 run {
-                    val (type, value) = typedArray.getResType(R.styleable.SearchWindow_android_text)
+                    val (type, value) = typedArray
+                        .getResType(R.styleable.SearchWindow_android_text)
                     if (type == ResType.INT) setText(value as Int)
                     else if (type == ResType.TEXT) setText(value as String)
                 }

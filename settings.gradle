@@ -1,2 +1,4 @@
+include ':searchwindow-debug'
+include ':searchwindow'
 include ':app'
 rootProject.name = "SearchWindow"
