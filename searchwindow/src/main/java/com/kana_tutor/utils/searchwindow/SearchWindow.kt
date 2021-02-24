@@ -35,6 +35,7 @@ class SearchWindow @JvmOverloads constructor(
     defStyle : Int = 0
 ) : RelativeLayout(context, attrs, defStyle) {
     private var searchOnClickListener : ((view:View, textIn:String) -> Unit)? = null
+    private var searchOnTouchListener : ((view:View, textIn:String) -> Unit)? = null
 
     private fun hideKeyboard() {
         val imm = context.getSystemService(INPUT_METHOD_SERVICE)
@@ -86,6 +87,8 @@ class SearchWindow @JvmOverloads constructor(
                 doAfterTextChanged { text ->
                     searchClearBTN.isEnabled = text!!.isNotEmpty()
                     searchSearchBTN.isEnabled = text.isNotEmpty()
+                    searchOnTouchListener?.invoke(this, text.toString())
+
                     Log.d("searchET", "text=$text")
                 }
                 run {
@@ -165,5 +168,8 @@ class SearchWindow @JvmOverloads constructor(
         set(str) { searchET.setText(str) }
     fun setSearchOnClick(listener: ((View, String) -> Unit)) {
         searchOnClickListener = listener
+    }
+    fun setSearchOnTouch(listener: ((View, String) -> Unit)) {
+        searchOnTouchListener = listener
     }
 }

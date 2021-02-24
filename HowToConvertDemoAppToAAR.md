@@ -47,12 +47,11 @@ process and at points along the way I encountered problems where
 the SearchWindow.kt wouldn't build because it couldn't find
 its binding file.
 
-I expect that to work on the AAR file I will have to open the 
-library in the IDE and make my changes.  In that enfironment you
-run Build->Build APK.  I'll update this file with details
-if/when I reach that point.
+I worked on the lib files directly and caused the .aar to rebuild with
+Build->Build Bundles/APK->Build APK and then copied the resultant ,arr
+file into the searchwindow-debug directory overwriting the previous 
+.aar file.  Then I edited MainActivity to add a new function and
+everything worked ok.
 
-I also understand the library should have no dependencies but at
-this point, this one does and I don't yet know how to fix that.
-
+The key to getting the .arr to rebuild was in Build...->APK.
 

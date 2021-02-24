@@ -40,6 +40,9 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         window1.setSearchOnClick(this::searchOnClick)
         window2.setSearchOnClick(this::searchOnClick)
+
+        window1.setSearchOnTouch(this::searchOnTouch)
+        window2.setSearchOnTouch(this::searchOnTouch)
     }
 
     fun showHide(view: View) {
@@ -64,5 +67,14 @@ class MainActivity : AppCompatActivity() {
         }
         testTextView.text = "{$viewName:$textIn}"
         Log.d("searchOnClick", "{$viewName:$textIn}")
+    }
+    fun searchOnTouch(view: View, textIn: String) {
+        val viewName = when (view) {
+            window1 -> "window1"
+            window2 -> "window2"
+            else -> "unknown"
+        }
+        testTextView.text = "{$viewName:$textIn}"
+        Log.d("searchOnTouch", "{$viewName:$textIn}")
     }
 }
