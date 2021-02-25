@@ -42,16 +42,11 @@ containing a copy of the .aar file and a build.gradle.
     Probably the IDE will do this for you.
     * Open activity_main.xml and fix the path to the custom view.
 
-At this point I was able to execute the demo app.  This was a difficult
-process and at points along the way I encountered problems where
-the SearchWindow.kt wouldn't build because it couldn't find
-its binding file.
+At this point I was able to execute the demo app.  
 
-I worked on the lib files directly and caused the .aar to rebuild with
-Build->Build Bundles/APK->Build APK and then copied the resultant ,arr
-file into the searchwindow-debug directory overwriting the previous 
-.aar file.  Then I edited MainActivity to add a new function and
-everything worked ok.
-
-The key to getting the .arr to rebuild was in Build...->APK.
+The build of the aar's happens with Build->Rebuild Project which places its
+aar file at searchwindow/build/outputs/aar/searchwindow-debug.aa for the
+debug build but the demo app gets it's .aar from searchwindow-debug/searchwindow-debug.aar
+so you need to copy the searchwindow .arr into the searchwindow-debug directory after
+changes.  Other than that, everything works ok.
 

@@ -3,6 +3,10 @@
 srcRoot="app/src/main"
 destRoot="searchwindow/src/main"
 mvFiles="
+res/drawable-ldpi/clear.png
+res/drawable-xhdpi/clear.png
+res/drawable-mdpi/clear.png
+res/drawable-hdpi/clear.png
 res/drawable-ldpi/clear_disabled.png
 res/drawable/clear_selector.xml
 res/drawable-xhdpi/clear_disabled.png
